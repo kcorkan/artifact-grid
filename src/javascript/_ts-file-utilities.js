@@ -171,7 +171,8 @@ Ext.define('Rally.technicalservices.FileUtilities', {
             context: context,
             filters: filter,
             sorter: store.sorters,
-            models: modelNames
+            models: modelNames,
+            limit: 'Infinity'
         });
         export_store.load({
             scope: this,
