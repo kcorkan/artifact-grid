@@ -3,11 +3,11 @@
 <head>
     <title>Artifact Grid</title>
     <!--  (c) 2015 Rally Software Development Corp.  All Rights Reserved. -->
-    <!--  Build Date: Tue Mar 29 2016 14:57:38 GMT-0600 (MDT) -->
+    <!--  Build Date: Tue Mar 29 2016 15:03:15 GMT-0600 (MDT) -->
     
     <script type="text/javascript">
-        var APP_BUILD_DATE = "Tue Mar 29 2016 14:57:38 GMT-0600 (MDT)";
-        var CHECKSUM = 18816629152;
+        var APP_BUILD_DATE = "Tue Mar 29 2016 15:03:15 GMT-0600 (MDT)";
+        var CHECKSUM = 18707505435;
     </script>
     
     <script type="text/javascript" src="/apps/2.0/sdk.js"></script>
@@ -727,7 +727,6 @@ Ext.define('Rally.technicalservices.FileUtilities', {
 
        var context = store.context || grid.getContext().getDataContext();
 
-        console.log('fetch',fetch, store.parentTypes, grid.modelNames);
         var export_store = Ext.create('Rally.data.wsapi.artifact.Store',{
             fetch: fetch,
             context: context,
@@ -870,8 +869,8 @@ Ext.define("artifact-grid", {
             gridConfig: {
                 store: store,
                 columnCfgs: [
-                    'FormattedID',
-                    'Name'
+                    'Name',
+                    'ScheduleState'
                 ]
             },
             height: this.getHeight()

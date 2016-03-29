@@ -90,8 +90,8 @@ Ext.define("artifact-grid", {
             gridConfig: {
                 store: store,
                 columnCfgs: [
-                    'FormattedID',
-                    'Name'
+                    'Name',
+                    'ScheduleState'
                 ]
             },
             height: this.getHeight()

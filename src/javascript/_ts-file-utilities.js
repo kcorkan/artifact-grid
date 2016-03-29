@@ -165,7 +165,6 @@ Ext.define('Rally.technicalservices.FileUtilities', {
 
        var context = store.context || grid.getContext().getDataContext();
 
-        console.log('fetch',fetch, store.parentTypes, grid.modelNames);
         var export_store = Ext.create('Rally.data.wsapi.artifact.Store',{
             fetch: fetch,
             context: context,
