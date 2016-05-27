@@ -43,34 +43,40 @@ Ext.define('Rally.technicalservices.FileUtilities', {
     convertDataArrayToCSVText: function(data_array, requestedFieldHash){
 
         var text = '';
+        var csv = [], headers = [];
+
         Ext.each(Object.keys(requestedFieldHash), function(key){
             text += requestedFieldHash[key] + ',';
+
+            headers.push(requestedFieldHash[key].replace(/"/g, "\"\""));
         });
+        csv.push(headers.join(','))
         text = text.replace(/,$/,'\n');
 
         Ext.each(data_array, function(d){
+            var row = [];
             Ext.each(Object.keys(requestedFieldHash), function(key){
+                var val = d[key] || "";
                 if (d[key]){
                     if (typeof d[key] === 'object'){
                         if (d[key].FormattedID) {
-                            text += Ext.String.format("\"{0}\",",d[key].FormattedID );
+                            val = d[key].FormattedID;
                         } else if (d[key].Name) {
-                            text += Ext.String.format("\"{0}\",",d[key].Name );
+                            val = d[key].Name;
                         } else if (!isNaN(Date.parse(d[key]))){
-                            text += Ext.String.format("\"{0}\",",Rally.util.DateTime.formatWithDefaultDateTime(d[key]));
+                            val = Rally.util.DateTime.formatWithDefaultDateTime(d[key]);
                         }else {
-                            text += Ext.String.format("\"{0}\",",d[key].toString());
+                            val = d[key].toString();
                         }
-                    } else {
-                        text += Ext.String.format("\"{0}\",",d[key] );
                     }
-                } else {
-                    text += ',';
                 }
+                val = val.toString().replace(/"/g, "\"\"");
+                row.push(Ext.String.format("\"{0}\"", val));
             },this);
+            csv.push(row.join(','));
             text = text.replace(/,$/,'\n');
         },this);
-        return text;
+        return csv.join('\n');
     },
     /*
      * will render using your grid renderer.  If you want it to ignore the grid renderer,
@@ -135,7 +141,8 @@ Ext.define('Rally.technicalservices.FileUtilities', {
                     }
                 }
             },this);
-            csv.push('"' + node_values.join('","') + '"');
+            var escaped_values = _.map(node_values, function(v){ return v.toString().replace(/"/g, "\"\"");});
+            csv.push('"' + escaped_values.join('","') + '"');
         }
         return  csv.join('\r\n');
     },
@@ -188,7 +195,6 @@ Ext.define('Rally.technicalservices.FileUtilities', {
 
                     var node_values = [];
                     _.each(fetch, function(f){
-                        console.log('f',f,record.get(f));
                         if (_.isObject(record.get(f))){
                             if (record.get(f)._refObjectName){
                                 node_values.push(record.get(f)._refObjectName);
@@ -204,8 +210,8 @@ Ext.define('Rally.technicalservices.FileUtilities', {
                         }
 
                     });
-                    console.log(node_values);
-                    csv.push('"' + node_values.join('","') + '"');
+                    var escaped_values = _.map(node_values, function(v){ return v.toString().replace(/"/g, "\"\"");});
+                    csv.push('"' + escaped_values.join('","') + '"');
                 }
                 deferred.resolve(csv.join('\n'));
 
