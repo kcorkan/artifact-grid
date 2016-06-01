@@ -3,11 +3,11 @@
 <head>
     <title>Artifact Grid</title>
     <!--  (c) 2015 Rally Software Development Corp.  All Rights Reserved. -->
-    <!--  Build Date: Fri May 27 2016 17:57:00 GMT-0600 (MDT) -->
+    <!--  Build Date: Wed Jun 01 2016 09:57:49 GMT-0600 (MDT) -->
     
     <script type="text/javascript">
-        var APP_BUILD_DATE = "Fri May 27 2016 17:57:00 GMT-0600 (MDT)";
-        var CHECKSUM = 19052907489;
+        var APP_BUILD_DATE = "Wed Jun 01 2016 09:57:49 GMT-0600 (MDT)";
+        var CHECKSUM = 19089121099;
     </script>
     
     <script type="text/javascript" src="/apps/2.0/sdk.js"></script>
@@ -632,7 +632,7 @@ Ext.define('Rally.technicalservices.FileUtilities', {
                         }
                     }
                 }
-                val = val.toString().replace(/"/g, "\"\"");
+                val = val && val.toString().replace(/"/g, "\"\"") || "";
                 row.push(Ext.String.format("\"{0}\"", val));
             },this);
             csv.push(row.join(','));
@@ -703,7 +703,7 @@ Ext.define('Rally.technicalservices.FileUtilities', {
                     }
                 }
             },this);
-            var escaped_values = _.map(node_values, function(v){ return v.toString().replace(/"/g, "\"\"");});
+            var escaped_values = _.map(node_values, function(v){ return v && v.toString().replace(/"/g, "\"\"") || "";});
             csv.push('"' + escaped_values.join('","') + '"');
         }
         return  csv.join('\r\n');
@@ -772,7 +772,7 @@ Ext.define('Rally.technicalservices.FileUtilities', {
                         }
 
                     });
-                    var escaped_values = _.map(node_values, function(v){ return v.toString().replace(/"/g, "\"\"");});
+                    var escaped_values = _.map(node_values, function(v){ return v && v.toString().replace(/"/g, "\"\"") || "";});
                     csv.push('"' + escaped_values.join('","') + '"');
                 }
                 deferred.resolve(csv.join('\n'));

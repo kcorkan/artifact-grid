@@ -70,7 +70,7 @@ Ext.define('Rally.technicalservices.FileUtilities', {
                         }
                     }
                 }
-                val = val.toString().replace(/"/g, "\"\"");
+                val = val && val.toString().replace(/"/g, "\"\"") || "";
                 row.push(Ext.String.format("\"{0}\"", val));
             },this);
             csv.push(row.join(','));
@@ -141,7 +141,7 @@ Ext.define('Rally.technicalservices.FileUtilities', {
                     }
                 }
             },this);
-            var escaped_values = _.map(node_values, function(v){ return v.toString().replace(/"/g, "\"\"");});
+            var escaped_values = _.map(node_values, function(v){ return v && v.toString().replace(/"/g, "\"\"") || "";});
             csv.push('"' + escaped_values.join('","') + '"');
         }
         return  csv.join('\r\n');
@@ -210,7 +210,7 @@ Ext.define('Rally.technicalservices.FileUtilities', {
                         }
 
                     });
-                    var escaped_values = _.map(node_values, function(v){ return v.toString().replace(/"/g, "\"\"");});
+                    var escaped_values = _.map(node_values, function(v){ return v && v.toString().replace(/"/g, "\"\"") || "";});
                     csv.push('"' + escaped_values.join('","') + '"');
                 }
                 deferred.resolve(csv.join('\n'));
