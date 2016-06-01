@@ -198,12 +198,16 @@ Ext.define('Rally.technicalservices.FileUtilities', {
                         if (_.isObject(record.get(f))){
                             if (record.get(f)._refObjectName){
                                 node_values.push(record.get(f)._refObjectName);
-                            }
-                            if (record.get(f)._tagsNameArray){
+                            } else if (record.get(f)._tagsNameArray){
                                 node_values.push(_.pluck(record.get(f)._tagsNameArray,"Name"));
-                            }
-                            if (Date.parse(record.get(f))){
+                            } else if (Date.parse(record.get(f))) {
                                 node_values.push(Rally.util.DateTime.formatWithDefaultDateTime(record.get(f)));
+                            } else if (record.get(f).FormattedID){
+                                node_values.push(record.get(f).FormattedID);
+                            } else if (record.get(f).Name){
+                                node_values.push(record.get(f).Name);
+                            }else{
+                                node_values.push(record.get(f).toString());
                             }
                         } else {
                                 node_values.push(record.get(f));

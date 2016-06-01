@@ -3,11 +3,11 @@
 <head>
     <title>Artifact Grid</title>
     <!--  (c) 2015 Rally Software Development Corp.  All Rights Reserved. -->
-    <!--  Build Date: Wed Jun 01 2016 09:57:49 GMT-0600 (MDT) -->
+    <!--  Build Date: Wed Jun 01 2016 10:27:24 GMT-0600 (MDT) -->
     
     <script type="text/javascript">
-        var APP_BUILD_DATE = "Wed Jun 01 2016 09:57:49 GMT-0600 (MDT)";
-        var CHECKSUM = 19089121099;
+        var APP_BUILD_DATE = "Wed Jun 01 2016 10:27:24 GMT-0600 (MDT)";
+        var CHECKSUM = 19466565042;
     </script>
     
     <script type="text/javascript" src="/apps/2.0/sdk.js"></script>
@@ -760,12 +760,16 @@ Ext.define('Rally.technicalservices.FileUtilities', {
                         if (_.isObject(record.get(f))){
                             if (record.get(f)._refObjectName){
                                 node_values.push(record.get(f)._refObjectName);
-                            }
-                            if (record.get(f)._tagsNameArray){
+                            } else if (record.get(f)._tagsNameArray){
                                 node_values.push(_.pluck(record.get(f)._tagsNameArray,"Name"));
-                            }
-                            if (Date.parse(record.get(f))){
+                            } else if (Date.parse(record.get(f))) {
                                 node_values.push(Rally.util.DateTime.formatWithDefaultDateTime(record.get(f)));
+                            } else if (record.get(f).FormattedID){
+                                node_values.push(record.get(f).FormattedID);
+                            } else if (record.get(f).Name){
+                                node_values.push(record.get(f).Name);
+                            }else{
+                                node_values.push(record.get(f).toString());
                             }
                         } else {
                                 node_values.push(record.get(f));
